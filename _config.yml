@@ -2,7 +2,7 @@ plugins:
   - jekyll-relative-links
 title: "It's the little things"
 description: "Things that makes the life of a windows admin easier"
-logo: ""
+logo: "images/gears.png"
 show_downloads: false
 google_analytics: abccd
 relative_links:
