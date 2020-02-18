@@ -23,6 +23,8 @@
 
         <p>{{ site.description | default: site.github.project_tagline }}</p>
 
+        {% include _navigation.html %}
+
         <p>Icons made by <a href="https://www.flaticon.com/authors/phatplus">phatplus</a> from <a href="https://www.flaticon.com/">Flaticon</a></p>
 
         {% if site.github.is_user_page %}
