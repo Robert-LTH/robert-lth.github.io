@@ -1,5 +1,10 @@
 plugins:
   - jekyll-relative-links
+title: [It's the little things]
+description: [Things that makes the life of a windows admin easier]
+logo: [Location of the logo]
+show_downloads: ["false"]
+google_analytics: [Your Google Analytics tracking ID]
 relative_links:
   enabled: true
   collections: true
