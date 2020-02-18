@@ -3,7 +3,7 @@ plugins:
 title: "It's the little things"
 description: "Things that makes the life of a windows admin easier"
 logo: ""
-show_downloads: "false"
+show_downloads: false
 google_analytics: abccd
 relative_links:
   enabled: true
