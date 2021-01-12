@@ -3,8 +3,6 @@ layout: post
 title: Generate a MEMCM HardwareID
 ---
 
-# Generate a MEMCM HardwareID
-
 ClientIDManagerStartup.log shows which parts are used to generate the ID. The entry in the log looks like this:
 
 > Computed HardwareID=2:<br />
