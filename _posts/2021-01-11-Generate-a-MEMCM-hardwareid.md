@@ -23,13 +23,32 @@ There are three more things that the log doesn't say.
   - The input string should be encoded as Unicode
 
 ### The script
-<script src="http://gist-it.appspot.com/https://github.com/Robert-LTH/Powershell/blob/master/Get-MEMCMHardwareID.ps1" ></script>
 
-### Get-HashFromString
-<script src="http://gist-it.appspot.com/https://github.com/Robert-LTH/Powershell/blob/master/Get-HashFromString.ps1" ></script>
+	function Get-MEMCMHardwareID {
+		[OutputType([String])]
+		$SystemEnclosureInformation = Get-CimInstance -Namespace "root/cimv2" -ClassName "Win32_SystemEnclosure"
+		$SystemEnclosureSerialNumber = $SystemEnclosureInformation | Select-Object -ExpandProperty "SerialNumber"
+		$SystemEnclosureSMBIOSAssetTag = $SystemEnclosureInformation | Select-Object -ExpandProperty "SMBIOSAssetTag"
+		$BaseBoardSerialNumber = Get-CimInstance -Namespace "root/cimv2" -ClassName "Win32_BaseBoard" | Select-Object -ExpandProperty "SerialNumber"
+		$BIOSSerialNumber = Get-CimInstance -Namespace "root/cimv2" -ClassName "Win32_BIOS" | Select-Object -ExpandProperty "SerialNumber"
+		$SystemEnclosureChassisType = $SystemEnclosureInformation | Select-Object -ExpandProperty "ChassisTypes"
 
-### Get-HexAsString
-<script src="http://gist-it.appspot.com/https://github.com/Robert-LTH/Powershell/blob/master/Get-HexAsString.ps1" ></script>
+		if (Get-IsChassisTypeLaptop -ChassisType $SystemEnclosureChassisType) {
+			$MacAddress = "<Not used on laptop>"
+		}
+		else {
+			$MacAddress = Get-CimInstance -Namespace "root/cimv2" -Query "SELECT Index, MACAddress FROM Win32_NetworkAdapterConfiguration WHERE IPEnabled=True" | Select-Object -First 1 -ExpandProperty MacAddress
+		}
 
-### Get-IsChassisTypeLaptop
-<script src="http://gist-it.appspot.com/https://github.com/Robert-LTH/Powershell/blob/master/Get-IsChassisTypeLaptop.ps1" ></script>
+		$HashBytes = Get-HashFromString -String ("{0}!{1}!{2}!{3}!{4}" -f $SystemEnclosureSerialNumber,$SystemEnclosureSMBIOSAssetTag,$BaseBoardSerialNumber,$BIOSSerialNumber,$MacAddress)
+		$HashString = Get-HexAsString -Bytes $HashBytes
+
+		"2:$HashString"
+	}
+
+### Dependencies
+[Get-HashFromString](https://github.com/Robert-LTH/Powershell/blob/master/Get-HashFromString.ps1)
+
+[Get-HexAsString](https://github.com/Robert-LTH/Powershell/blob/master/Get-HexAsString.ps1)
+
+[Get-IsChassisTypeLaptop](https://github.com/Robert-LTH/Powershell/blob/master/Get-IsChassisTypeLaptop.ps1)
