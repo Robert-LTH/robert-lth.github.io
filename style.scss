@@ -19,7 +19,7 @@ html {
 
 body {
 	background: $white;
-  font: 18px/1.4 $helvetica;
+  font: .9em/1.4 $helvetica;
   color: $darkGray;
 }
 
@@ -196,7 +196,7 @@ img {
   cursor: pointer;
   font-family: $helveticaNeue;
   font-weight: 300;
-  font-size: 28px;
+  font-size: 1.8em;
   letter-spacing: 1px;
 }
 
@@ -257,7 +257,7 @@ nav {
     border-left: 2px solid $gray;
     padding: 0.1em 1em;
     color: $gray;
-    font-size: 22px;
+    font-size: 0.8em;
     font-style: italic;
   }
 
